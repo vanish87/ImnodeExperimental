@@ -6,6 +6,7 @@
 // This is because we need ImTextureID to carry a 64-bit value and by default ImTextureID is defined as void*.
 // This define is set in the example .vcxproj file and need to be replicated in your app or by adding it to your imconfig.h file.
 
+#include "node_editor.h"
 #include <imnodes.h>
 #include <imgui.h>
 #include "imgui_impl_win32.h"
@@ -85,9 +86,13 @@ int main(int, char**)
     //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
+    ImNodes::CreateContext();
+    example::NodeEditorInitialize();
+
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
     //ImGui::StyleColorsLight();
+    ImNodes::StyleColorsDark();
 
     // Setup Platform/Renderer backends
     ImGui_ImplWin32_Init(hwnd);
@@ -138,6 +143,8 @@ int main(int, char**)
         ImGui_ImplDX12_NewFrame();
         ImGui_ImplWin32_NewFrame();
         ImGui::NewFrame();
+
+        example::NodeEditorShow();
 
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
         if (show_demo_window)
@@ -220,6 +227,8 @@ int main(int, char**)
     // Cleanup
     ImGui_ImplDX12_Shutdown();
     ImGui_ImplWin32_Shutdown();
+    example::NodeEditorShutdown();
+    ImNodes::DestroyContext();
     ImGui::DestroyContext();
 
     CleanupDeviceD3D();
