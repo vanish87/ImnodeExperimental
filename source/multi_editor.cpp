@@ -40,14 +40,14 @@ void show_editor(const char* editor_name, Editor& editor)
 
     ImNodes::BeginNodeEditor();
 
-    // if (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows) &&
-    //     ImNodes::IsEditorHovered() && ImGui::IsKeyReleased(SDL_SCANCODE_A))
-    // {
-    //     const int node_id = ++editor.current_id;
-    //     ImNodes::SetNodeScreenSpacePos(node_id, ImGui::GetMousePos());
-    //     ImNodes::SnapNodeToGrid(node_id);
-    //     editor.nodes.push_back(Node(node_id, 0.f));
-    // }
+    if (ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows) &&
+        ImNodes::IsEditorHovered() && ImGui::IsKeyReleased(ImGuiKey_A))
+    {
+        const int node_id = ++editor.current_id;
+        ImNodes::SetNodeScreenSpacePos(node_id, ImGui::GetMousePos());
+        ImNodes::SnapNodeToGrid(node_id);
+        editor.nodes.push_back(Node(node_id, 0.f));
+    }
 
     for (Node& node : editor.nodes)
     {
